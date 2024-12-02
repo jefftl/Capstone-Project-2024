@@ -2,6 +2,10 @@
 
 ## Model Description
 
+- **Model Name:** Plant Classification Convolutional Neural Net
+- **Model Type:** ResNet18 CNN
+- **Purpose:** This model is used to classify 30 different plant species based on images.  
+
 **Input:** 
 - RGB images transformed as follows:
  Training:
@@ -42,39 +46,62 @@ BasicBlock Structure:
 - BatchNorm initialization with weight=1, bias=0
 
 ## Performance
-- Training approach:
- - Extensive data augmentation
- - Separate evaluation transforms
- - Kaiming weight initialization
- - BatchNorm for training stability
- - Residual connections for gradient flow
-- Metrics monitored:
- - Training/validation loss
- - Validation accuracy
- - Per-class accuracy
- - Confusion matrix
+- Training metrics show:
+  - Training loss decreases smoothly from ~3.0 to ~0.1
+  - Validation loss decreases from ~2.5 to ~0.5
+  - Validation accuracy improves steadily to ~85%
+  - High initial epoch time (~4000s) that stabilizes to ~100s
 
+### Training Curves
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/resnet_time.png">
+   </div>
+
+### Classification Results
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/resnet.png">
+   </div>
+
+- Final model achieves:
+  - Overall accuracy of 85.37%
+  - Most classes achieve >85% accuracy
+  - Some classes show perfect or near-perfect classification (>95%)
+- Best performing classes:
+  - Watermelon (0.95)
+  - Longbeans (0.94)
+  - Peperchili (0.94)
+  - Paddy (0.94)
+- Challenging classes:
+  - Melon (0.00)
+  - Cantaloupe (0.62)
+  - Coconut (0.72)
+  - Banana (0.74)
+   
 ## Limitations
-- Fixed input processing pipeline
-- Memory requirements increase with batch size
-- Requires careful learning rate tuning
-- May struggle with:
- - Very small objects due to aggressive downsampling
- - Extreme rotations beyond ±15 degrees
- - Color variations beyond jittering parameters
-- BatchNorm dependencies between training/inference
+- Shows class-specific weaknesses:
+  - Some classes show significantly lower accuracy (e.g., Cantaloupe at ~63.5%)
+  - Confusion between visually similar classes (visible in confusion matrix)
+  - Uneven performance across different plant types
+- Training characteristics:
+  - Long initial epoch time (~4000s)
+  - Takes ~30 epochs to reach optimal performance
+  - Shows signs of plateauing after 40 epochs
+  - Persistent gap between training and validation loss indicating some overfitting
 
 ## Trade-offs
-- Resolution vs Speed:
- - Initial high resolution (256) provides detail
- - Multiple stride-2 operations reduce computation
-- Depth vs Complexity:
- - 18 layers deep, but efficient residual design
- - Each BasicBlock adds parameters but improves feature learning
-- Augmentation vs Training Time:
- - Comprehensive augmentation improves robustness
- - Increases training time per epoch
-- Memory vs Batch Size:
- - BatchNorm requires reasonable batch sizes
- - GPU memory limits maximum batch size
+- Accuracy vs Training Time:
+  - Achieves good accuracy (85.37%) but requires significant training time
+  - Initial epochs are particularly time-intensive
+- Class Balance vs Overall Performance:
+  - Performs very well on majority of classes
+  - Some classes suffer from lower accuracy
+  - Trade-off between overall accuracy and per-class consistency
+- Model Complexity vs Results:
+  - Complex enough to achieve good accuracy
+  - But shows diminishing returns after 40 epochs
+  - Some classes might benefit from more specialized architecture
+- Generalization vs Specialization:
+  - Good general performance across most classes
+  - Struggles with specific challenging cases
+  - Balance between broad applicability and specialized recognition
 --- 
