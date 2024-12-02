@@ -41,42 +41,67 @@ Classifier:
 - Linear: 4096 -> 4096, ReLU
 - Linear: 4096 -> num_classes
 
+
+
 ## Performance
-- Training approach:
- - Basic data augmentation
-   - Random cropping
-   - Horizontal flipping
-   - Color jittering
- - Dropout layers for regularization
- - ReLU activations for non-linearity
- - Large initial conv layer stride for efficient processing
-- Metrics monitored:
- - Training/validation loss
- - Validation accuracy
- - Per-class accuracy
- - Confusion matrix
+### Training Metrics
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/alexnet_time.png">
+   </div>
+
+- Training progression:
+  - Training loss decreases smoothly from ~3.3 to ~0.2
+  - Validation loss decreases from ~3.3 to ~0.8
+  - Validation accuracy improves steadily to ~83%
+  - Initial epoch time ~2300s, stabilizing to ~150s after epoch 5
+
+### Classification Results
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/alexnet.png">
+   </div>
+
+- Final model achieves:
+- Strong performers:
+  - Longbeans (0.91)
+  - Papaya (0.91)
+  - Peperchili (0.91)
+  - Watermelon (0.92)
+  - Cucumber (0.92)
+  - Waterapple (0.92)
+- Challenging classes:
+  - Melon (0.02)
+  - Cantaloupe (0.59)
+  - Coconut (0.66)
+  - Mango (0.68)
 
 ## Limitations
-- Large kernel size (11x11) in first layer may miss fine details
-- Aggressive stride in first conv layer (4) reduces spatial information
-- No batch normalization
-- Fixed input size requirements
-- May struggle with:
- - Very small objects
- - Complex textures
- - Modern high-resolution tasks
-- Memory intensive fully connected layers
+- Model shows significant performance variance:
+  - Near complete failure on melon class (1% accuracy)
+  - Struggles with certain fruits (cantaloupe, coconut, mango)
+  - Notable overfitting after epoch 20 (diverging training/validation loss)
+- Computational demands:
+  - High initial epoch time (~2300s)
+  - Large memory requirements
+  - Significant training time to reach convergence
+- Classification challenges:
+  - Confusion between visually similar classes
+  - Inconsistent performance across different plant types
+  - Some classes show poor precision-recall balance
 
 ## Trade-offs
-- Architecture Design:
- - Large kernels process more context but lose detail
- - Aggressive downsampling reduces computation but loses spatial information
-- Memory Usage:
- - Large fully connected layers (4096 neurons)
- - High memory requirement for feature maps
-- Regularization:
- - Dropout helps prevent overfitting
- - But may need longer training time
-- Input Processing:
- - Simple augmentation pipeline
- - Limited color augmentation (only brightness and contrast)
+- Accuracy vs Computational Cost:
+  - Achieves 81.48% accuracy but requires substantial computational resources
+  - Long training times (~150s per epoch after stabilization)
+  - High memory usage due to deep architecture
+- Model Complexity vs Performance:
+  - Deep network provides good feature extraction
+  - But shows diminishing returns after epoch 40
+  - Significant gap between training and validation loss
+- Class Balance:
+  - Excellent performance on some classes (>90%)
+  - Poor performance on others (<70%)
+  - Trade-off between overall accuracy and class-specific reliability
+- Training Stability vs Speed:
+  - Stable training progression
+  - But requires many epochs to reach optimal performance
+  - Clear overfitting trends in later epochs
