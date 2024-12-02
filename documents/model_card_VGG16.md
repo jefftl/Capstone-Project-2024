@@ -71,7 +71,7 @@ Initialization:
 ## Performance
 ### Training Metrics
    <div>
-    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/alexnet_time.png">
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/VGG_time.png">
    </div>
 
 - Training progression:
@@ -82,7 +82,7 @@ Initialization:
 
 ### Classification Results
    <div>
-    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/alexnet_time.png">
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/vgg.png">
    </div>
 
 - Final model achieves:
@@ -94,14 +94,14 @@ Initialization:
     - Galangal (94.0% accuracy)
 
    Notable class performances:
-- Strong performers (F1-score > 0.90):
+- Strong performers:
   - Longbeans (0.91)
   - Papaya (0.91)
   - Peperchili (0.91)
   - Watermelon (0.92)
   - Cucumber (0.92)
   - Waterapple (0.92)
-- Challenging classes (F1-score < 0.70):
+- Challenging classes:
   - Melon (0.02)
   - Cantaloupe (0.59)
   - Coconut (0.66)
