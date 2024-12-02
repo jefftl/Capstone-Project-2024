@@ -2,58 +2,106 @@
 
 ## Model Description
 
-**Input:**
-- RGB images resized to 224x224 pixels
-- Normalized using mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-- Data augmentation during training: random crops, horizontal flips, color jittering
+**Input:** 
+- RGB images transformed as follows:
+ Training:
+ - Resize to 256x256
+ - Random crop to 224x224
+ - Random horizontal flip
+ - Random rotation (±15 degrees)
+ - Color jitter (brightness=0.2, contrast=0.2, saturation=0.2)
+ - ToTensor conversion
+ - Normalize with mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+
+ Evaluation:
+ - Resize to 256x256
+ - Center crop to 224x224
+ - ToTensor conversion
+ - Normalize with mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
 
 **Output:**
-- Probability distribution across N classes
+- Probability distribution across num_classes
 - Values between 0-1 representing confidence for each class
 - Sum of probabilities equals 1
 
 **Model Architecture:**
-- 16-layer network (13 convolutional + 3 fully connected)
-- Uniform architecture using 3x3 convolutions
-- Structure:
-  - 5 blocks of convolutional layers
-  - Max pooling between blocks
-  - Three fully connected layers (4096, 4096, num_classes)
-- Total parameters: ~138 million
+Features Network (5 blocks):
+- Block 1:
+ - Conv 3->64, 3x3, pad 1, ReLU
+ - Conv 64->64, 3x3, pad 1, ReLU
+ - MaxPool 2x2, stride 2
+
+- Block 2:
+ - Conv 64->128, 3x3, pad 1, ReLU
+ - Conv 128->128, 3x3, pad 1, ReLU
+ - MaxPool 2x2, stride 2
+
+- Block 3:
+ - Conv 128->256, 3x3, pad 1, ReLU
+ - Conv 256->256, 3x3, pad 1, ReLU
+ - Conv 256->256, 3x3, pad 1, ReLU
+ - MaxPool 2x2, stride 2
+
+- Block 4:
+ - Conv 256->512, 3x3, pad 1, ReLU
+ - Conv 512->512, 3x3, pad 1, ReLU
+ - Conv 512->512, 3x3, pad 1, ReLU
+ - MaxPool 2x2, stride 2
+
+- Block 5:
+ - Conv 512->512, 3x3, pad 1, ReLU
+ - Conv 512->512, 3x3, pad 1, ReLU
+ - Conv 512->512, 3x3, pad 1, ReLU
+ - MaxPool 2x2, stride 2
+
+Classifier:
+- Flatten
+- Linear: 512*7*7 -> 4096, ReLU
+- Dropout
+- Linear: 4096 -> 4096, ReLU
+- Dropout
+- Linear: 4096 -> num_classes
+
+Initialization:
+- Conv layers: Kaiming normal (fan_out, relu)
+- Conv biases: Constant(0)
+- Linear weights: Normal(0, 0.01)
+- Linear biases: Constant(0)
 
 ## Performance
 - Training approach:
-  - SGD optimizer with momentum 0.9
-  - Initial learning rate: 0.01
-  - Cosine annealing scheduler
-  - Batch size: 32 (limited by memory)
-  - Mixed precision training
+ - Comprehensive data augmentation
+ - Dropout for regularization
+ - Uniform 3x3 convolutions
+ - Weight initialization strategy
+ - ReLU activations
 - Metrics monitored:
-  - Training/validation loss
-  - Validation accuracy
-  - Per-class accuracy
-  - Confusion matrix
+ - Training/validation loss
+ - Validation accuracy
+ - Per-class accuracy
+ - Confusion matrix
 
 ## Limitations
-- Very large model size
-- High memory requirements
-- Slower training and inference
+- Deep network (16 layers) requires significant computation
+- Large number of parameters
+- No batch normalization
+- Memory intensive, especially for:
+ - Large feature maps
+ - Large fully connected layers
+ - High batch sizes
 - Fixed input size requirement (224x224)
-- No skip connections
-- Vanishing gradient issues in deep layers
-- High computational cost
 
 ## Trade-offs
-- Accuracy vs Resources:
-  - High accuracy potential
-  - Requires significant computational resources
-- Depth vs Training Stability:
-  - Deep architecture captures complex features
-  - More prone to optimization difficulties
+- Architecture Design:
+ - Uniform 3x3 filters are efficient
+ - Deep network provides good feature hierarchy
+ - But requires significant memory and computation
+- Training Considerations:
+ - Comprehensive augmentation improves robustness
+ - But increases training time
 - Memory vs Batch Size:
-  - Large memory footprint
-  - Forces smaller batch sizes
-- Training Time vs Performance:
-  - Longer training time
-  - Better feature extraction capability
-
+ - Large model size limits batch size
+ - Small batches may affect training stability
+- Regularization:
+ - Dropout helps prevent overfitting
+ - But doubles forward pass memory during training
