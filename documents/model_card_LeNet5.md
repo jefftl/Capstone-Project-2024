@@ -37,41 +37,90 @@
 - Uses ReLU instead of traditional tanh
 - Uses MaxPool instead of traditional AvgPool
 - Adapted for RGB input (3 channels)
-
+  
 ## Performance
-- Training approach:
-  - Modern data augmentation techniques
-  - Evaluation transformation:
-    - Resize to 32x32
-    - ToTensor conversion
-    - Standard normalization
-- Metrics monitored:
-  - Training/validation loss
-  - Validation accuracy
-  - Per-class accuracy
-  - Confusion matrix
+### Training Metrics
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/lenet_time.png">
+   </div>
+
+- Training progression:
+ - Training loss decreases from ~3.3 to ~0.15
+ - Validation loss decreases from ~3.0 to ~0.85
+ - Validation accuracy improves to ~82%
+ - Initial epoch time ~8000s, stabilizing to ~200s
+
+### Classification Results
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/lenet5.png">
+   </div>
+
+- Final model achieves:
+ - Overall test accuracy: 75.13%
+ - High variation in per-class performance
+ - Best performing classes:
+   - Peperchili (93.5% accuracy)
+   - Paddy (90.0% accuracy) 
+   - Shallot (90.0% accuracy)
+
+- Detailed metrics for final epoch:
+ - Training loss: 0.1385
+ - Validation loss: 0.8596
+ - Validation accuracy: 81.67%
+ - Average epoch time: ~120 seconds
+
+### Notable Class Performances
+- Strong performers (>85% accuracy):
+ - Peperchili (93.5%)
+ - Paddy (90.0%)
+ - Shallot (90.0%)
+ - Watermelon (91.0%)
+
+- Poor performers (<65% accuracy):
+ - Bilimbi (9.0%)
+ - Orange (63.5%)
+ - Spinach (59.5%)
+ - Mango (62.0%)
 
 ## Limitations
-- Small input size (32x32) may lose detail
-- Relatively shallow architecture
-- Limited receptive field
-- May struggle with:
-  - Complex natural images
-  - Fine-grained visual differences
-  - Large-scale classification tasks
-- Simple architecture compared to modern standards
-- No batch normalization or dropout
+- Significant performance inconsistency:
+ - Large gap between best and worst performing classes (84.5%)
+ - Complete failure on some classes (<10% accuracy)
+ - High confusion between visually similar classes
+ 
+- Training characteristics:
+ - Very high initial epoch time (~8000s)
+ - Significant overfitting after epoch 30
+ - Large divergence between training and validation loss
+ - Unstable validation accuracy progression
+
+- Resource intensive:
+ - High initial computational requirements
+ - Large memory footprint
+ - Long training time to reach convergence
 
 ## Trade-offs
-- Architecture Simplicity vs Capacity:
-  - Clean, straightforward implementation
-  - Limited feature extraction capability
-- Input Size vs Detail:
-  - Small input size processes quickly
-  - May miss fine details in larger images
-- Memory vs Depth:
-  - Very efficient memory usage
-  - Shallow network limits learning capacity
-- Training Speed vs Sophistication:
-  - Fast training and inference
-  - Lacks modern architectural improvements
+- Accuracy vs Resources:
+ - Lower accuracy (75.13%) despite high computational cost
+ - Requires significant GPU memory
+ - Long training times, especially initially
+
+- Model Architecture:
+ - Simple architecture enables faster inference
+ - But limits feature extraction capability
+ - Struggles with complex visual distinctions
+
+- Training Stability vs Performance:
+ - Fast initial learning
+ - But shows significant overfitting
+ - Unstable validation metrics
+
+- Class Balance:
+ - Some classes show excellent performance (>90%)
+ - Others show very poor performance (<10%)
+ - Large performance disparity between classes
+
+- Practicality:
+ - Simpler implementation than modern architectures
+ - Lower memory requirements during inference
+ - But significantly lower accuracy and reliability
