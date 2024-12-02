@@ -69,39 +69,72 @@ Initialization:
 - Linear biases: Constant(0)
 
 ## Performance
-- Training approach:
- - Comprehensive data augmentation
- - Dropout for regularization
- - Uniform 3x3 convolutions
- - Weight initialization strategy
- - ReLU activations
-- Metrics monitored:
- - Training/validation loss
- - Validation accuracy
- - Per-class accuracy
- - Confusion matrix
+### Training Metrics
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/alexnet_time.png">
+   </div>
+
+- Training progression:
+  - Training loss decreases smoothly from ~3.3 to ~0.2
+  - Validation loss decreases from ~3.3 to ~0.8
+  - Validation accuracy improves steadily to ~83%
+  - Initial epoch time ~2300s, stabilizing to ~150s after epoch 5
+
+### Classification Results
+   <div>
+    <img style="width:1000px" src="https://github.com/jefftl/Capstone-Project-2024/blob/main/images/alexnet_time.png">
+   </div>
+
+- Final model achieves:
+  - Overall test accuracy: 81.48%
+  - Most classes achieve >80% accuracy
+  - Highest performing classes:
+    - Shallot (97.5% accuracy)
+    - Peperchili (94.5% accuracy)
+    - Galangal (94.0% accuracy)
+
+   Notable class performances:
+- Strong performers (F1-score > 0.90):
+  - Longbeans (0.91)
+  - Papaya (0.91)
+  - Peperchili (0.91)
+  - Watermelon (0.92)
+  - Cucumber (0.92)
+  - Waterapple (0.92)
+- Challenging classes (F1-score < 0.70):
+  - Melon (0.02)
+  - Cantaloupe (0.59)
+  - Coconut (0.66)
+  - Mango (0.68)
 
 ## Limitations
-- Deep network (16 layers) requires significant computation
-- Large number of parameters
-- No batch normalization
-- Memory intensive, especially for:
- - Large feature maps
- - Large fully connected layers
- - High batch sizes
-- Fixed input size requirement (224x224)
+- Model shows significant performance variance:
+  - Near complete failure on melon class (1% accuracy)
+  - Struggles with certain fruits (cantaloupe, coconut, mango)
+  - Notable overfitting after epoch 20 (diverging training/validation loss)
+- Computational demands:
+  - High initial epoch time (~2300s)
+  - Large memory requirements
+  - Significant training time to reach convergence
+- Classification challenges:
+  - Confusion between visually similar classes
+  - Inconsistent performance across different plant types
+  - Some classes show poor precision-recall balance
 
 ## Trade-offs
-- Architecture Design:
- - Uniform 3x3 filters are efficient
- - Deep network provides good feature hierarchy
- - But requires significant memory and computation
-- Training Considerations:
- - Comprehensive augmentation improves robustness
- - But increases training time
-- Memory vs Batch Size:
- - Large model size limits batch size
- - Small batches may affect training stability
-- Regularization:
- - Dropout helps prevent overfitting
- - But doubles forward pass memory during training
+- Accuracy vs Computational Cost:
+  - Achieves 81.48% accuracy but requires substantial computational resources
+  - Long training times (~150s per epoch after stabilization)
+  - High memory usage due to deep architecture
+- Model Complexity vs Performance:
+  - Deep network provides good feature extraction
+  - But shows diminishing returns after epoch 40
+  - Significant gap between training and validation loss
+- Class Balance:
+  - Excellent performance on some classes (>90%)
+  - Poor performance on others (<70%)
+  - Trade-off between overall accuracy and class-specific reliability
+- Training Stability vs Speed:
+  - Stable training progression
+  - But requires many epochs to reach optimal performance
+  - Clear overfitting trends in later epochs
