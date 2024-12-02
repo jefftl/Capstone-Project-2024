@@ -45,10 +45,10 @@
    </div>
 
 - Training progression:
- - Training loss decreases from ~3.3 to ~0.15
- - Validation loss decreases from ~3.0 to ~0.85
- - Validation accuracy improves to ~82%
- - Initial epoch time ~8000s, stabilizing to ~200s
+ - Training loss decreases from ~2.9 to ~1.9
+ - Validation loss decreases from ~2.5 to ~1.9
+ - Validation accuracy plateaus at ~44%
+ - Initial epoch time ~2500s, stabilizing to ~100s
 
 ### Classification Results
    <div>
@@ -56,71 +56,67 @@
    </div>
 
 - Final model achieves:
- - Overall test accuracy: 75.13%
- - High variation in per-class performance
+ - Overall test accuracy: 42.82%
+ - High variance in class performance
  - Best performing classes:
-   - Peperchili (93.5% accuracy)
-   - Paddy (90.0% accuracy) 
-   - Shallot (90.0% accuracy)
+   - Watermelon (74.0% accuracy)
+   - Papaya (71.5% accuracy)
+   - Eggplant (65.0% accuracy)
 
-- Detailed metrics for final epoch:
- - Training loss: 0.1385
- - Validation loss: 0.8596
- - Validation accuracy: 81.67%
- - Average epoch time: ~120 seconds
+### Detailed Performance Analysis
+- Strong performers (>60% accuracy):
+ - Watermelon: 74.0%
+ - Papaya: 71.5%
+ - Eggplant: 65.0%
+ - Waterapple: 65.0%
 
-### Notable Class Performances
-- Strong performers (>85% accuracy):
- - Peperchili (93.5%)
- - Paddy (90.0%)
- - Shallot (90.0%)
- - Watermelon (91.0%)
+- Poor performers (<30% accuracy):
+ - Bilimbi: 9.5%
+ - Cantaloupe: 7.5%
+ - Mango: 14.0%
+ - Kale: 24.5%
 
-- Poor performers (<65% accuracy):
- - Bilimbi (9.0%)
- - Orange (63.5%)
- - Spinach (59.5%)
- - Mango (62.0%)
+- Average metrics:
+ - Macro avg F1-score: 0.42
+ - Weighted avg F1-score: 0.42
 
 ## Limitations
-- Significant performance inconsistency:
- - Large gap between best and worst performing classes (84.5%)
- - Complete failure on some classes (<10% accuracy)
- - High confusion between visually similar classes
- 
-- Training characteristics:
- - Very high initial epoch time (~8000s)
- - Significant overfitting after epoch 30
- - Large divergence between training and validation loss
- - Unstable validation accuracy progression
+- Severe performance issues:
+ - Very low overall accuracy (42.82%)
+ - Many classes performing below 30% accuracy
+ - Large disparity between best and worst classes
+ - High confusion between classes
 
-- Resource intensive:
+- Training limitations:
+ - Quick plateau in validation accuracy
+ - Limited improvement after epoch 10
  - High initial computational requirements
- - Large memory footprint
- - Long training time to reach convergence
+ - Minimal convergence in loss after early epochs
+
+- Architectural constraints:
+ - Simple architecture struggles with complex dataset
+ - Limited feature extraction capability
+ - Poor performance on fine-grained distinctions
+ - Inadequate capacity for 30-class problem
 
 ## Trade-offs
-- Accuracy vs Resources:
- - Lower accuracy (75.13%) despite high computational cost
- - Requires significant GPU memory
- - Long training times, especially initially
+- Simplicity vs Performance:
+ - Simple architecture enables fast inference
+ - But severely limits classification capability
+ - Significant accuracy sacrifice for simplicity
 
-- Model Architecture:
- - Simple architecture enables faster inference
- - But limits feature extraction capability
- - Struggles with complex visual distinctions
+- Resource Usage vs Results:
+ - Lower memory requirements
+ - Faster training after initial epoch
+ - But delivers poor classification performance
 
-- Training Stability vs Performance:
- - Fast initial learning
- - But shows significant overfitting
- - Unstable validation metrics
+- Learning Capacity:
+ - Quick initial learning
+ - But early plateau in performance
+ - Unable to capture complex class differences
 
-- Class Balance:
- - Some classes show excellent performance (>90%)
- - Others show very poor performance (<10%)
- - Large performance disparity between classes
-
-- Practicality:
- - Simpler implementation than modern architectures
- - Lower memory requirements during inference
- - But significantly lower accuracy and reliability
+- Practical Considerations:
+ - Lightweight deployment
+ - Fast inference time
+ - But accuracy too low for practical use
+ - Not suitable for real-world applications with this dataset
