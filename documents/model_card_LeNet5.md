@@ -3,75 +3,75 @@
 ## Model Description
 
 **Input:** 
-- Grayscale images resized to 32x32 pixels
-- Normalized using mean=[0.5] and std=[0.5]
-- Simple preprocessing with no data augmentation for original implementation
-- Can be adapted for RGB images with minor modifications
+- RGB images resized to 32x32 pixels
+- Normalized using mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+- Data augmentation during training:
+  - Random horizontal flips
+  - Random rotation (±10 degrees)
+  - Random affine translations (±10%)
+  - ToTensor conversion
+  - Normalization
 
 **Output:**
-- Probability distribution across output classes 
+- Probability distribution across num_classes
 - Values between 0-1 representing confidence for each class
 - Sum of probabilities equals 1
-- Originally designed for 10 digit classes (MNIST)
 
 **Model Architecture:**
-- Classic 7-layer convolutional neural network
+- Modified LeNet-5 for RGB images
 - Structure:
- - Conv1: 6 filters of size 5x5, stride 1
- - Average pooling: 2x2, stride 2
- - Conv2: 16 filters of size 5x5, stride 1 
- - Average pooling: 2x2, stride 2
- - Conv3: 120 filters of size 5x5, stride 1
- - Fully connected: 84 neurons
- - Output layer: num_classes neurons
-- Activation functions: Tanh (originally), ReLU (modern versions)
-- Total parameters: ~60K (much smaller than modern architectures)
+  - Feature Extractor:
+    - Conv1: 3->6 channels, 5x5 kernel
+    - ReLU activation
+    - MaxPool 2x2
+    - Conv2: 6->16 channels, 5x5 kernel
+    - ReLU activation
+    - MaxPool 2x2
+  - Classifier:
+    - Flatten layer
+    - Linear: 16*5*5 -> 120
+    - ReLU activation
+    - Linear: 120 -> 84
+    - ReLU activation
+    - Linear: 84 -> num_classes
+- Uses ReLU instead of traditional tanh
+- Uses MaxPool instead of traditional AvgPool
+- Adapted for RGB input (3 channels)
 
 ## Performance
 - Training approach:
- - SGD optimizer
- - Learning rate: typically 0.01
- - Simple step learning rate decay
- - Batch size: flexible, commonly 32-128
- - No modern training techniques required
+  - Modern data augmentation techniques
+  - Evaluation transformation:
+    - Resize to 32x32
+    - ToTensor conversion
+    - Standard normalization
 - Metrics monitored:
- - Training/validation loss
- - Validation accuracy
- - Per-class accuracy
- - Confusion matrix
-- Historical performance:
- - Achieved ~99% accuracy on MNIST
- - Set benchmark for digit recognition in 1990s
+  - Training/validation loss
+  - Validation accuracy
+  - Per-class accuracy
+  - Confusion matrix
 
 ## Limitations
-- Very simple architecture by modern standards
-- Limited capacity for complex features
-- Originally designed for small grayscale images
+- Small input size (32x32) may lose detail
+- Relatively shallow architecture
+- Limited receptive field
 - May struggle with:
- - High resolution images
- - Complex natural images
- - Large numbers of classes
- - Fine-grained visual differences
-- No modern architectural features like:
- - Batch normalization
- - Residual connections
- - Dropout
- - Advanced pooling methods
+  - Complex natural images
+  - Fine-grained visual differences
+  - Large-scale classification tasks
+- Simple architecture compared to modern standards
+- No batch normalization or dropout
 
 ## Trade-offs
-- Simplicity vs Power:
- - Very simple to implement and understand
- - Limited learning capacity compared to modern networks
-- Resource Usage vs Capability:
- - Extremely lightweight (~60K parameters)
- - May not capture complex features
-- Training Speed vs Accuracy:
- - Fast training and inference
- - Lower accuracy ceiling than modern architectures
-- Input Constraints vs Flexibility:
- - Optimized for small images
- - Needs significant modification for modern tasks
-- Historical Value vs Modern Use:
- - Excellent educational tool
- - Still useful for simple tasks
- - Not suitable for state-of-the-art applications
+- Architecture Simplicity vs Capacity:
+  - Clean, straightforward implementation
+  - Limited feature extraction capability
+- Input Size vs Detail:
+  - Small input size processes quickly
+  - May miss fine details in larger images
+- Memory vs Depth:
+  - Very efficient memory usage
+  - Shallow network limits learning capacity
+- Training Speed vs Sophistication:
+  - Fast training and inference
+  - Lacks modern architectural improvements
