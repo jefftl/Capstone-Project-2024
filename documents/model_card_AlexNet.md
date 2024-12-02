@@ -50,10 +50,10 @@ Classifier:
    </div>
 
 - Training progression:
-  - Training loss decreases smoothly from ~3.3 to ~0.2
-  - Validation loss decreases from ~3.3 to ~0.8
-  - Validation accuracy improves steadily to ~83%
-  - Initial epoch time ~2300s, stabilizing to ~150s after epoch 5
+ - Training loss decreases from ~3.3 to ~0.15
+ - Validation loss decreases from ~3.0 to ~0.85
+ - Validation accuracy improves to ~82%
+ - Initial epoch time ~8000s, stabilizing to ~200s
 
 ### Classification Results
    <div>
@@ -61,47 +61,71 @@ Classifier:
    </div>
 
 - Final model achieves:
-- Strong performers:
-  - Longbeans (0.91)
-  - Papaya (0.91)
-  - Peperchili (0.91)
-  - Watermelon (0.92)
-  - Cucumber (0.92)
-  - Waterapple (0.92)
-- Challenging classes:
-  - Melon (0.02)
-  - Cantaloupe (0.59)
-  - Coconut (0.66)
-  - Mango (0.68)
+ - Overall test accuracy: 75.13%
+ - High variation in per-class performance
+ - Best performing classes:
+   - Peperchili (93.5% accuracy)
+   - Paddy (90.0% accuracy) 
+   - Shallot (90.0% accuracy)
+
+- Detailed metrics for final epoch:
+ - Training loss: 0.1385
+ - Validation loss: 0.8596
+ - Validation accuracy: 81.67%
+ - Average epoch time: ~120 seconds
+
+### Notable Class Performances
+- Strong performers (>85% accuracy):
+ - Peperchili (93.5%)
+ - Paddy (90.0%)
+ - Shallot (90.0%)
+ - Watermelon (91.0%)
+
+- Poor performers (<65% accuracy):
+ - Bilimbi (9.0%)
+ - Orange (63.5%)
+ - Spinach (59.5%)
+ - Mango (62.0%)
 
 ## Limitations
-- Model shows significant performance variance:
-  - Near complete failure on melon class (1% accuracy)
-  - Struggles with certain fruits (cantaloupe, coconut, mango)
-  - Notable overfitting after epoch 20 (diverging training/validation loss)
-- Computational demands:
-  - High initial epoch time (~2300s)
-  - Large memory requirements
-  - Significant training time to reach convergence
-- Classification challenges:
-  - Confusion between visually similar classes
-  - Inconsistent performance across different plant types
-  - Some classes show poor precision-recall balance
+- Significant performance inconsistency:
+ - Large gap between best and worst performing classes (84.5%)
+ - Complete failure on some classes (<10% accuracy)
+ - High confusion between visually similar classes
+ 
+- Training characteristics:
+ - Very high initial epoch time (~8000s)
+ - Significant overfitting after epoch 30
+ - Large divergence between training and validation loss
+ - Unstable validation accuracy progression
+
+- Resource intensive:
+ - High initial computational requirements
+ - Large memory footprint
+ - Long training time to reach convergence
 
 ## Trade-offs
-- Accuracy vs Computational Cost:
-  - Achieves 81.48% accuracy but requires substantial computational resources
-  - Long training times (~150s per epoch after stabilization)
-  - High memory usage due to deep architecture
-- Model Complexity vs Performance:
-  - Deep network provides good feature extraction
-  - But shows diminishing returns after epoch 40
-  - Significant gap between training and validation loss
+- Accuracy vs Resources:
+ - Lower accuracy (75.13%) despite high computational cost
+ - Requires significant GPU memory
+ - Long training times, especially initially
+
+- Model Architecture:
+ - Simple architecture enables faster inference
+ - But limits feature extraction capability
+ - Struggles with complex visual distinctions
+
+- Training Stability vs Performance:
+ - Fast initial learning
+ - But shows significant overfitting
+ - Unstable validation metrics
+
 - Class Balance:
-  - Excellent performance on some classes (>90%)
-  - Poor performance on others (<70%)
-  - Trade-off between overall accuracy and class-specific reliability
-- Training Stability vs Speed:
-  - Stable training progression
-  - But requires many epochs to reach optimal performance
-  - Clear overfitting trends in later epochs
+ - Some classes show excellent performance (>90%)
+ - Others show very poor performance (<10%)
+ - Large performance disparity between classes
+
+- Practicality:
+ - Simpler implementation than modern architectures
+ - Lower memory requirements during inference
+ - But significantly lower accuracy and reliability
