@@ -7,7 +7,7 @@ Welcome to the repository for predicting 30 different plant species using convol
 - [Models Already Trained on the Dataset](https://drive.google.com/drive/folders/1PrgbfW7dpJPjd12sRu-GmuXmLbf243fr?usp=sharing)
 
 ## Non-Technical Explanation of Your Project
-This project implements and compares four popular deep learning models (ResNet18, VGG16, AlexNet, and LeNet-5) for plant image classification. These models are trained to recognize and categorize images of 30 different plant species. I tried to build the models in such a way that they could be reused on other datasets. Each model can be run independantly and then compared against one another using [compare_models](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/compare_models.ipynb). The best version of each model is also saved when running, allowing users to reuse the already trained models. 
+This project implements and compares four popular deep learning models (ResNet18, VGG16, AlexNet, and LeNet-5) for plant image classification. These models are trained to recognize and categorize images of 30 different plant species. This project was built it such a way that it can be reused on other datasets which allows for rapid testing of a vareity of models. Each model can be run independantly and then compared against one another using [compare_models](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/compare_models.ipynb). The best version of each model is also saved when running, allowing users to reuse the already trained models. 
 
 ## Using the project on other datasets
 
@@ -29,7 +29,7 @@ data/
         [same structure as train]
 ```
 
-if the model is not in this structure I have provided [split_dataset.ps1](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/split-dataset.ps1) which allows the user to split the data set randomly creating the file structure needed. The user must also set the percentage split for training, validation and testing. Please see example of how to call the powershell script. 
+if the model is not in this structure I have provided [split_dataset.ps1](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/split-dataset.ps1) which allows the user to split the data set randomly creating the file structure needed. The user must also set the percentage split for training, validation and testing. Please see example of how to call the powershell script. The original data is preserved allowing mutiple splits to be made. 
 
 ```powershell
 .\split-dataset.ps1 -sourceDir "images" -trainPercent 70 -valPercent 20 -testPercent 10
@@ -42,11 +42,47 @@ val_loc = '...' # Validation dataset
 test_loc = '...' # Test dataset
 model_path = '...' # The best model that was saved. 
 ```
-
-This will provide the graphs seen in the model cards. Finally if you have run all the models you can use the [compare_models](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/compare_models.ipynb) file to get an overall summary of how each of the models performed. Please just make sure you update the check point of each of the models. 
-
+This will provide the graphs seen in the model cards. Finally if you have run all the models you can use the [compare_models](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/compare_models.ipynb) file to get an overall summary of how each of the models performed. Please make sure you update the checkpoints of each of the models. 
 ```python
 'checkpoint': '...' # Location of your best model for each architecture
+```
+## Using the Pre-trained models
+
+The [Pre-trained models](https://drive.google.com/drive/folders/1PrgbfW7dpJPjd12sRu-GmuXmLbf243fr?usp=sharing) should only be used on a dataset with the same classes as the original dataset but they allow you to test accuracy of the models without having to re-train them which can be time consuming. 
+
+There are 2 ways in which the pre-trained models can be used. 
+
+### Method 1 : Testing an individual model 
+
+ - Download the [Pre-trained model](https://drive.google.com/drive/folders/1PrgbfW7dpJPjd12sRu-GmuXmLbf243fr?usp=sharing) of you choosing.
+ - Download the specefic models [.ipynb](https://github.com/jefftl/Capstone-Project-2024/tree/main/src)
+ - Modify the following locations
+```python
+test_loc = '...' # Test dataset
+model_path = '...' # The path to best model that was saved. 
+```
+ - Comment out the cell that begins with if __name__ == '__main__': (second last cell in all the models)
+ - excecute the entire notebook.
+
+### Method 2 : Testing all the models
+
+ - Download the all [Pre-trained models](https://drive.google.com/drive/folders/1PrgbfW7dpJPjd12sRu-GmuXmLbf243fr?usp=sharing)
+ - Download [compare_models](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/compare_models.ipynb)
+ - Modify the following locations
+```python
+test_loc = '...' # Test dataset
+'checkpoint': '...' # Location of your best model for each architecture
+```
+ - excecute the entire notebook.
+
+#### Final Notes on making use of the code: The code was specifically built to run using the GPU's available on Google Colab. If you do not have access to these GPU's please make sure to comment out the following code:  
+```python
+from IPython.display import clear_output
+!nvidia-smi
+clear_output(wait=True)
+
+if i % 50 == 0:
+torch.cuda.empty_cache()
 ```
 
 ## Data
@@ -130,6 +166,5 @@ For more information on the hyperparameters and Data augmentation please consult
 - LeNet-5's simple architecture proves inadequate for this complex task
 
 ## Contact Details
-- Jeffrey Lewis
 - jeffreytudorlewis@gmail.com
 ```
