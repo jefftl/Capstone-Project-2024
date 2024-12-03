@@ -2,7 +2,7 @@
 
 ## Model Description
 
-- **Model Name:** Plant Classification Convolutional Neural Net
+- **Model Name:** Plant Classification using Convolutional Neural Networks
 - **Model Type:** ResNet18 CNN
 - **Purpose:** This model is used to classify 30 different plant species based on images.  
 
