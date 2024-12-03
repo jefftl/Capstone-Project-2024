@@ -2,6 +2,10 @@
 
 ## Model Description
 
+- **Model Name:** Plant Classification using Convolutional Neural Networks
+- **Model Type:** LeNet5 CNN
+- **Purpose:** This model is used to classify 30 different plant species based on images. 
+
 **Input:** 
 - RGB images resized to 32x32 pixels
 - Normalized using mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
