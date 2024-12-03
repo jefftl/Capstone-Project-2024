@@ -92,10 +92,6 @@ Initialization:
 - Final model achieves:
   - Overall test accuracy: 81.48%
   - Most classes achieve >80% accuracy
-  - Highest performing classes:
-    - Shallot (97.5% accuracy)
-    - Peperchili (94.5% accuracy)
-    - Galangal (94.0% accuracy)
 
    Notable class performances:
 - Strong performers:
