@@ -76,20 +76,20 @@ Classifier:
  - Training loss: 0.1385
  - Validation loss: 0.8596
  - Validation accuracy: 81.67%
- - Average epoch time: ~120 seconds
 
 ### Notable Class Performances
 - Strong performers (>85% accuracy):
- - Peperchili (93.5%)
- - Paddy (90.0%)
- - Shallot (90.0%)
+ - Shallot (93.5%)
+ - Waterapple (90.0%)
+ - Eggplant (90.0%)
  - Watermelon (91.0%)
 
 - Poor performers (<65% accuracy):
- - Bilimbi (9.0%)
- - Orange (63.5%)
+ - Canteloupe (9.0%)
+ - Coconut (43.0%)
  - Spinach (59.5%)
  - Mango (62.0%)
+ - There is also signifigant confusion between cateloupe's and melons
 
 ## Limitations
 - Significant performance inconsistency:
