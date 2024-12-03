@@ -2,6 +2,10 @@
 
 ## Model Description
 
+- **Model Name:** Plant Classification using Convolutional Neural Networks
+- **Model Type:** VGG16 CNN
+- **Purpose:** This model is used to classify 30 different plant species based on images. 
+
 **Input:** 
 - RGB images transformed as follows:
  Training:
