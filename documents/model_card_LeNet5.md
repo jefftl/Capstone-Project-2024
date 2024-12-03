@@ -62,10 +62,6 @@
 - Final model achieves:
  - Overall test accuracy: 42.82%
  - High variance in class performance
- - Best performing classes:
-   - Watermelon (74.0% accuracy)
-   - Papaya (71.5% accuracy)
-   - Eggplant (65.0% accuracy)
 
 ### Detailed Performance Analysis
 - Strong performers (>60% accuracy):
