@@ -1,1 +1,0 @@
-These are the models that were trained for the Project: [Trained Models](https://drive.google.com/drive/folders/1PrgbfW7dpJPjd12sRu-GmuXmLbf243fr?usp=sharing)
