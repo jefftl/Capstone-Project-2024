@@ -22,13 +22,19 @@ I obtained the [Plant Classification](https://www.kaggle.com/datasets/marquis03/
 ## Collection process
 
 - <b>How was the data acquired?</b> There is no indication of how the dataset was obtained, however I assume it was obtained using web scraping techniques.  
-- <b>If the data is a sample of a larger subset, what was the sampling strategy?</b> The data was already sampled, however I have provided: %%%%%%%%%%%%%%%%%%%%%%% to split the images into train, test and validate folders. The splitting happens randomly with each folder containing a percentage of images stipulated by the user. 
+- <b>If the data is a sample of a larger subset, what was the sampling strategy?</b> The data was already sampled, however I have provided: [split-dataset.ps1](https://github.com/jefftl/Capstone-Project-2024/blob/main/src/split-dataset.ps1) to split the images into train, test and validate folders. The splitting happens randomly with each folder containing a percentage of images stipulated by the user. 
 - <b>Over what time frame was the data collected?</b> Ther is no indication on the time taken to collect the dataset. 
 
 ## Preprocessing/cleaning/labelling
 
-- <b>Was any preprocessing/cleaning/labeling of the data done (e.g., discretization or bucketing, tokenization, part-of-speech tagging, SIFT feature extraction, removal of instances, processing of missing values)? If so, please provide a description. If not, you may skip the remaining questions in this section.</b> The dataset was already organised into train, validate and test folders when obtained. No additional data cleaning was done.
-- <b>Was the “raw” data saved in addition to the preprocessed/cleaned/labeled data (e.g., to support unanticipated future uses)?</b> This wasn't needed however the script mentioned above does retain the raw data to support unanticipated future uses.
+- <b>Was any preprocessing/cleaning/labeling of the data done (e.g., discretization or bucketing, tokenization, part-of-speech tagging, SIFT feature extraction, removal of instances, processing of missing values)? If so, please provide a description. If not, you may skip the remaining questions in this section.</b> The dataset was already organised into train, validate and test folders when obtained. The data underwent different transfoms when being loaded into the CNN model. These include:
+ - Resizing
+ - Random croping
+ - Random horizontal flip
+ - Random rotation
+ - Color jitter
+ - For more detailed information please look at each of the model cards.
+- <b>Was the “raw” data saved in addition to the preprocessed/cleaned/labeled data (e.g., to support unanticipated future uses)?</b> The raw data was saved as the transforms only changed the data when loaded into the model. 
  
 ## Uses
 
